@@ -37,8 +37,11 @@ module Whenever
       @set_variables.has_key?(name) ? @set_variables[name] : super
     end
 
+    # this whole thing seems buggy to me, but adjusting to check
+    # for presence of @set_variables first to prevent
+    # issues with rails auto completion
     def self.respond_to?(name, include_private = false)
-      @set_variables.has_key?(name) || super
+      (@set_variables && @set_variables.has_key?(name)) || super
     end
 
     def env(variable, value)
